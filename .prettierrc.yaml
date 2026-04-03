@@ -1,0 +1,9 @@
+printWidth: 100
+proseWrap: preserve
+plugins:
+  - prettier-plugin-go-template
+
+overrides:
+  - files: "*.html"
+    options:
+      parser: go-template
