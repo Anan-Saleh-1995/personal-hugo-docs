@@ -1,32 +1,38 @@
 {
   "name": "personal-hugo-docs",
   "version": "1.0.0",
-  "description": "Personal Hugo home and docs site.",
+  "description": "Custom Hugo docs site for personal notes and documentation.",
   "private": true,
   "scripts": {
-    "dev": "scripts\\hugo.cmd server -D --disableFastRender",
-    "build": "scripts\\hugo.cmd build",
+    "dev": "hugo server -D --disableFastRender",
+    "build": "hugo build",
+    "postbuild": "pagefind --site public --quiet",
     "format": "prettier --write \"**/*.{html,js,json,md,mjs,scss,yaml,yml}\"",
     "format:check": "prettier --check \"**/*.{html,js,json,md,mjs,scss,yaml,yml}\"",
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\" \"#public\" \"#resources\"",
     "lint:css": "stylelint \"assets/**/*.scss\"",
     "lint": "npm run lint:md && npm run lint:css",
+    "test:smoke": "playwright test",
     "validate": "npm run format:check && npm run lint && npm run build",
     "prepare": "husky"
   },
   "keywords": [
     "hugo",
     "docs",
-    "personal-site"
+    "documentation",
+    "personal-site",
+    "static-site"
   ],
-  "author": "",
+  "author": "Anan Saleh",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
+    "@playwright/test": "^1.59.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "markdownlint-cli2": "^0.22.0",
+    "pagefind": "^1.4.0",
     "prettier": "^3.8.1",
     "prettier-plugin-go-template": "^0.0.15",
     "stylelint": "^17.6.0",

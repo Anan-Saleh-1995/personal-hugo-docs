@@ -2,6 +2,7 @@ export default {
   extends: ["stylelint-config-standard-scss"],
   rules: {
     "media-feature-range-notation": null,
+    "property-no-vendor-prefix": null,
     "selector-class-pattern": null,
   },
 };

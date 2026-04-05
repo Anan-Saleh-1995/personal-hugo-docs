@@ -2,3 +2,5 @@ node_modules/
 public/
 resources/
 layouts/_markup/render-heading.html
+playwright-report/
+test-results/

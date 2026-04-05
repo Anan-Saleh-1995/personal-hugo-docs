@@ -1,0 +1,31 @@
+baseURL: https://example.org/
+languageCode: en-us
+title: Personal Hugo Docs
+enableRobotsTXT: true
+disableKinds:
+  - taxonomy
+  - term
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: false
+  highlight:
+    noClasses: false
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
+
+params:
+  description: Personal docs site built with Hugo.
+  siteName: Personal Hugo Docs
+  themeColorLight: "#ffffff"
+  themeColorDark: "#1c2128"
+  repoUrl: "someurl.com"
+  repoLabel: GitHub
+  search: true
+  editPageBaseUrl: ""
+  toc:
+    startLevel: 2
+    endLevel: 3
