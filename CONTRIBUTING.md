@@ -7,7 +7,7 @@ npm install
 npm run dev
 ```
 
-Make sure Hugo Extended and the Dart Sass CLI are installed on your machine and available on `PATH`.
+Make sure Hugo Extended is installed on your machine and available on `PATH`.
 
 Before submitting changes:
 

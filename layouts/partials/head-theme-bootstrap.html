@@ -13,7 +13,7 @@
 />
 
 <script>
-  (() => {
+  function initThemeBootstrap() {
     const meta = document.getElementById("theme-color-meta");
     if (!meta) {
       return;
@@ -39,5 +39,7 @@
 
     const themeColor = theme === "dark" ? darkThemeColor : lightThemeColor;
     meta.setAttribute("content", themeColor);
-  })();
+  }
+
+  initThemeBootstrap();
 </script>

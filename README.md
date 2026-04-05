@@ -7,15 +7,7 @@ Custom Hugo docs site built as a public, maintainable foundation for long-term n
 - Git
 - Node.js LTS
 - Hugo Extended `0.159.1`
-- Dart Sass CLI on `PATH`
-
-Hugo's Dart Sass pipeline requires a real Sass executable on `PATH`. On Windows, install it with:
-
-```bash
-npm install --global sass
-```
-
-You can also install Dart Sass from the official standalone release if you prefer.
+- npm dependencies installed through `npm install`
 
 ## Local Setup
 
@@ -23,6 +15,8 @@ You can also install Dart Sass from the official standalone release if you prefe
 npm install
 npm run dev
 ```
+
+SCSS is compiled by the npm `sass` package before Hugo runs, so you do not need Hugo's external Dart Sass setup for this repo.
 
 ## Build And Checks
 
