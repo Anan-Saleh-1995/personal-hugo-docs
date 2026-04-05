@@ -6,43 +6,13 @@ let overlay = null;
 let mainArea = null;
 let sidebarNav = null;
 let toggleButtons = [];
-let persistScrollFrame = 0;
 
-const persistSidebarScroll = () => {
-  if (!sidebarNav) {
+const persistSidebarScroll = (link) => {
+  if (!(link instanceof HTMLAnchorElement) || !sidebarNav) {
     return;
   }
 
   window.sessionStorage.setItem(STORAGE_KEYS.sidebarScroll, String(sidebarNav.scrollTop));
-};
-
-const schedulePersistSidebarScroll = () => {
-  if (persistScrollFrame) {
-    window.cancelAnimationFrame(persistScrollFrame);
-  }
-
-  persistScrollFrame = window.requestAnimationFrame(() => {
-    persistScrollFrame = 0;
-    persistSidebarScroll();
-  });
-};
-
-const restoreSidebarScroll = () => {
-  if (!sidebarNav) {
-    return;
-  }
-
-  const saved = window.sessionStorage.getItem(STORAGE_KEYS.sidebarScroll);
-  if (!saved) {
-    return;
-  }
-
-  const nextScrollTop = Number.parseFloat(saved);
-  if (Number.isNaN(nextScrollTop)) {
-    return;
-  }
-
-  sidebarNav.scrollTop = nextScrollTop;
 };
 
 const updateToggleState = (open) => {
@@ -95,8 +65,6 @@ export const initNav = () => {
     overlay.hidden = true;
   }
 
-  restoreSidebarScroll();
-
   toggleButtons.forEach((button) => {
     button.addEventListener("click", () => {
       setNavOpen(!document.body.classList.contains("nav-open"));
@@ -106,22 +74,33 @@ export const initNav = () => {
   closeButton?.addEventListener("click", closeNav);
   overlay?.addEventListener("click", closeNav);
 
-  sidebar?.addEventListener("click", (event) => {
+  const getSidebarLink = (event) => {
     const target = event.target;
     if (!(target instanceof Element)) {
-      return;
+      return null;
     }
 
-    const link = target.closest("a[href]");
+    return target.closest("a[href]");
+  };
+
+  sidebar?.addEventListener(
+    "pointerdown",
+    (event) => {
+      const link = getSidebarLink(event);
+      persistSidebarScroll(link);
+    },
+    { capture: true },
+  );
+
+  sidebar?.addEventListener("click", (event) => {
+    const link = getSidebarLink(event);
     if (link) {
-      persistSidebarScroll();
+      persistSidebarScroll(link);
       if (drawerMode.matches) {
         closeNav();
       }
     }
   });
-
-  sidebarNav?.addEventListener("scroll", schedulePersistSidebarScroll, { passive: true });
 
   drawerMode.addEventListener("change", (event) => {
     if (!event.matches) {

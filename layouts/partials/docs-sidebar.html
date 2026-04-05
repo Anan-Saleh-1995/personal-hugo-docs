@@ -27,31 +27,7 @@
       </ul>
     </nav>
 
-    <script>
-      (() => {
-        const nav = document.currentScript.previousElementSibling;
-        if (!(nav instanceof HTMLElement)) {
-          return;
-        }
-
-        const storageKey = nav.dataset.navScrollKey;
-        if (!storageKey) {
-          return;
-        }
-
-        const saved = window.sessionStorage.getItem(storageKey);
-        if (!saved) {
-          return;
-        }
-
-        const nextScrollTop = Number.parseFloat(saved);
-        if (Number.isNaN(nextScrollTop)) {
-          return;
-        }
-
-        nav.scrollTop = nextScrollTop;
-      })();
-    </script>
+    <script src="/js/sidebar-scroll-restore.js"></script>
 
     {{ partial "docs-drawer-footer.html" . }}
   </div>
