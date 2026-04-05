@@ -32,8 +32,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Dart Sass CLI
-        run: npm install --global sass
+      - name: Install Dart Sass
+        run: |
+          SASS_VERSION=1.94.0
+          curl -fsSL -o dart-sass.tar.gz "https://github.com/sass/dart-sass/releases/download/${SASS_VERSION}/dart-sass-${SASS_VERSION}-linux-x64.tar.gz"
+          tar -xzf dart-sass.tar.gz
+          echo "$GITHUB_WORKSPACE/dart-sass" >> "$GITHUB_PATH"
 
       - name: Validate build
         run: npm run validate
