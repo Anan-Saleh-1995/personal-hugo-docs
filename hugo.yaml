@@ -1,4 +1,4 @@
-baseURL: https://example.org/
+baseURL: https://personal-hugo-docs.vercel.app/
 languageCode: en-us
 title: Personal Hugo Docs
 enableRobotsTXT: true
