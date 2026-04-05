@@ -89,7 +89,6 @@ body.nav-open {
 @media (max-width: #{($bp-medium - 0.001rem)}),
   ((max-height: 30rem) and (max-width: #{($bp-desktop - 0.001rem)})) {
   body.section-docs {
-    --header-height: 2.875rem;
     --docs-body-padding-inline: var(--space-3);
     --docs-body-padding-bottom: var(--space-4);
     --docs-body-no-toc-padding-bottom: var(--space-4);
@@ -143,7 +142,6 @@ body.nav-open {
 
 @media (max-width: #{($bp-compact - 0.001rem)}) {
   body.section-docs {
-    --header-height: 2.625rem;
     --docs-body-padding-inline: var(--space-2);
     --docs-body-padding-bottom: var(--space-3);
     --docs-body-no-toc-padding-bottom: var(--space-3);
