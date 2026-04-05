@@ -14,9 +14,8 @@
   href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
 />
 
-{{ with resources.Get "scss/main.scss" }}
-  {{ $options := dict "targetPath" "assets/main.css" "transpiler" "dartsass" }}
-  {{ $styles := . | toCSS $options }}
+{{ with resources.Get "css/main.css" }}
+  {{ $styles := . }}
   {{ if not hugo.IsServer }}
     {{ $styles = $styles | minify | fingerprint }}
   {{ end }}

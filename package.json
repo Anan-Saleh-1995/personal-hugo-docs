@@ -4,8 +4,9 @@
   "description": "Custom Hugo docs site for personal notes and documentation.",
   "private": true,
   "scripts": {
-    "dev": "hugo server -D --disableFastRender",
-    "build": "hugo build",
+    "build:css": "sass assets/scss/main.scss assets/css/main.css --no-source-map",
+    "dev": "npm run build:css && hugo server -D --disableFastRender",
+    "build": "npm run build:css && hugo build",
     "postbuild": "pagefind --site public --quiet",
     "format": "prettier --write \"**/*.{html,js,json,md,mjs,scss,yaml,yml}\"",
     "format:check": "prettier --check \"**/*.{html,js,json,md,mjs,scss,yaml,yml}\"",
@@ -35,6 +36,7 @@
     "pagefind": "^1.4.0",
     "prettier": "^3.8.1",
     "prettier-plugin-go-template": "^0.0.15",
+    "sass": "^1.99.0",
     "stylelint": "^17.6.0",
     "stylelint-config-standard-scss": "^17.0.0"
   },

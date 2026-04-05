@@ -13,3 +13,4 @@ assets/jsconfig.json
 playwright-report/
 test-results/
 notes/stress/
+assets/css/main.css
