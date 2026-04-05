@@ -1,0 +1,14 @@
+<div class="docs-topbar__inner">
+  <button
+    class="icon-button docs-topbar__nav-toggle"
+    type="button"
+    data-nav-toggle
+    aria-controls="docs-sidebar"
+    aria-expanded="false"
+  >
+    {{ partial "icon.html" (dict "name" "menu" "size" 24 "class" "icon") }}
+    <span class="sr-only">Open navigation</span>
+  </button>
+
+  {{ partial "docs-topbar-actions.html" . }}
+</div>

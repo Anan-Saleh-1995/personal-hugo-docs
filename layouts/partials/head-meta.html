@@ -1,0 +1,43 @@
+{{ $siteName := site.Params.siteName | default site.Title }}
+{{ $titleText := .Params.seo_title | default .Title | default $siteName }}
+{{ $title := $siteName }}
+{{ if and $titleText (ne $titleText $siteName) }}
+  {{ $title = printf "%s | %s" $titleText $siteName }}
+{{ end }}
+
+{{ $description := .Description | default .Summary | default site.Params.description }}
+{{ $canonical := .Params.canonical | default .Permalink }}
+
+
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}" />
+<link rel="canonical" href="{{ $canonical }}" />
+
+{{ with .Params.robots }}
+  <meta name="robots" content="{{ . }}" />
+{{ end }}
+
+
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+<meta property="og:site_name" content="{{ $siteName }}" />
+<meta property="og:title" content="{{ $titleText }}" />
+<meta property="og:description" content="{{ $description }}" />
+<meta property="og:url" content="{{ $canonical }}" />
+
+{{ $image := "" }}
+{{ with .Params.images }}
+  {{ $image = index . 0 }}
+{{ end }}
+{{ with $image }}
+  <meta property="og:image" content="{{ . | absURL }}" />
+  <meta name="twitter:image" content="{{ . | absURL }}" />
+{{ end }}
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ $titleText }}" />
+<meta name="twitter:description" content="{{ $description }}" />
+
+{{ if and (eq .Section "docs") (or .IsPage .IsSection) }}
+  {{ partial "seo-breadcrumbs.html" . }}
+{{ end }}

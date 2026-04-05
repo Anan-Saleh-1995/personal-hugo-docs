@@ -1,0 +1,4 @@
+{{ $toc := .TableOfContents }}
+{{ if gt (len (findRE "<li>" $toc)) 0 }}
+  {{ $toc }}
+{{ end }}

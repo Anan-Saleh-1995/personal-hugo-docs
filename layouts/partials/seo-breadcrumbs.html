@@ -1,0 +1,31 @@
+{{ $items := slice }}
+{{ $items = $items | append (dict "name" (site.Params.siteName | default site.Title) "item" site.BaseURL) }}
+{{ with site.GetPage "/docs" }}
+  {{ $items = $items | append (dict "name" .LinkTitle "item" .Permalink) }}
+{{ end }}
+{{ range .Ancestors.Reverse }}
+  {{ if and (eq .Section "docs") (ne .RelPermalink "/docs/") }}
+    {{ $items = $items | append (dict "name" .LinkTitle "item" .Permalink) }}
+  {{ end }}
+{{ end }}
+{{ if ne .RelPermalink "/docs/" }}
+  {{ $items = $items | append (dict "name" (.LinkTitle | default .Title) "item" .Permalink) }}
+{{ end }}
+
+{{ $listItems := slice }}
+{{ range $index, $entry := $items }}
+  {{ $listItems = $listItems | append (dict
+    "@type" "ListItem"
+    "position" (add $index 1)
+    "name" ($entry.name)
+    "item" ($entry.item)
+    )
+  }}
+{{ end }}
+
+{{ $payload := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" $listItems
+}}
+<script type="application/ld+json">{{ $payload | jsonify | safeJS }}</script>

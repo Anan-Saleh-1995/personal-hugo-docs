@@ -1,0 +1,27 @@
+{{ $model := partial "docs-page-model.html" . }}
+<div class="shell docs-shell">
+  <div class="docs-overlay" data-nav-overlay hidden></div>
+
+  <aside class="docs-sidebar" id="docs-sidebar" aria-label="Docs navigation">
+    {{ partial "docs-sidebar.html" $model.page }}
+  </aside>
+
+  <div class="docs-main-area">
+    <header class="docs-topbar">
+      {{ partial "docs-topbar.html" $model.page }}
+    </header>
+
+    {{ partial "mobile-page-toc.html" $model }}
+
+
+    <div class="{{ delimit $model.bodyClasses ` ` }}">
+      <section class="docs-content">
+        {{ partial $model.articlePartial $model.page }}
+      </section>
+
+      {{ partial "desktop-page-toc.html" $model }}
+    </div>
+  </div>
+
+  {{ partial "search-dialog.html" $model.page }}
+</div>

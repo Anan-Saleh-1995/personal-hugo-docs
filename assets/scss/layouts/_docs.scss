@@ -1,0 +1,152 @@
+@use "../tokens/breakpoints" as *;
+
+body.section-docs {
+  --docs-sidebar-width: var(--sidebar-width);
+  --docs-body-gap: var(--space-5);
+  --docs-body-padding-inline: var(--space-4);
+  --docs-body-padding-bottom: var(--space-5);
+  --docs-body-padding-top: var(--space-3);
+  --docs-body-no-toc-padding-bottom: var(--space-5);
+  --docs-body-no-toc-padding-top: var(--space-3);
+}
+
+body.search-open,
+body.nav-open {
+  overflow: hidden;
+}
+
+.docs-shell {
+  display: grid;
+  grid-template-columns: minmax(0, var(--docs-sidebar-width)) minmax(0, 1fr);
+  gap: 0;
+}
+
+.docs-sidebar {
+  min-width: 0;
+}
+
+.docs-main-area {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.docs-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--toc-width);
+  gap: var(--docs-body-gap);
+  padding: var(--docs-body-padding-top) var(--docs-body-padding-inline)
+    var(--docs-body-padding-bottom);
+}
+
+.docs-content {
+  min-width: 0;
+}
+
+.docs-body--no-toc {
+  grid-template-columns: minmax(0, 1fr);
+  padding: var(--docs-body-no-toc-padding-top) var(--docs-body-padding-inline)
+    var(--docs-body-no-toc-padding-bottom);
+}
+
+.docs-overlay,
+.mobile-page-toc {
+  display: none;
+}
+
+@media (min-width: $bp-medium) and (max-width: #{($bp-desktop - 0.001rem)}) {
+  body.section-docs {
+    --docs-body-gap: var(--space-3);
+    --docs-body-padding-inline: var(--space-3);
+    --docs-body-padding-bottom: var(--space-4);
+    --docs-body-no-toc-padding-bottom: var(--space-4);
+  }
+
+  .docs-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .docs-toc--desktop {
+    display: none;
+  }
+
+  .mobile-page-toc {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-1));
+    z-index: 14;
+    display: block;
+    margin: 0 var(--space-3) var(--space-2);
+  }
+}
+
+@media (min-width: $bp-wide) {
+  body.section-docs {
+    --docs-body-gap: 4rem;
+    --docs-body-padding-inline: var(--space-5);
+  }
+}
+
+@media (max-width: #{($bp-medium - 0.001rem)}),
+  ((max-height: 30rem) and (max-width: #{($bp-desktop - 0.001rem)})) {
+  body.section-docs {
+    --header-height: 2.875rem;
+    --docs-body-padding-inline: var(--space-3);
+    --docs-body-padding-bottom: var(--space-4);
+    --docs-body-no-toc-padding-bottom: var(--space-4);
+    --topbar-control-size: 2.5rem;
+  }
+
+  .docs-shell {
+    display: block;
+  }
+
+  .docs-main-area {
+    width: 100%;
+  }
+
+  .docs-toc--desktop {
+    display: none;
+  }
+
+  .docs-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    display: none;
+    background: var(--overlay-bg);
+  }
+
+  body.nav-open .docs-overlay {
+    display: block;
+  }
+
+  .docs-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .mobile-page-toc {
+    position: sticky;
+    top: calc(var(--header-height) + env(safe-area-inset-top) + var(--space-1));
+    z-index: 14;
+    display: block;
+    margin: 0 var(--space-3) var(--space-2);
+  }
+}
+
+@media (min-width: $bp-compact) and (max-width: #{($bp-medium - 0.001rem)}) {
+  .mobile-page-toc {
+    margin-left: var(--space-4);
+    margin-right: var(--space-4);
+  }
+}
+
+@media (max-width: #{($bp-compact - 0.001rem)}) {
+  body.section-docs {
+    --header-height: 2.625rem;
+    --docs-body-padding-inline: var(--space-2);
+    --docs-body-padding-bottom: var(--space-3);
+    --docs-body-no-toc-padding-bottom: var(--space-3);
+    --topbar-control-size: 2.25rem;
+  }
+}

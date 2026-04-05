@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode | default `en-us` }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="{{ if eq .Section `docs` }}section-docs{{ end }}">
+    <main id="main" class="site-main">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "scripts.html" . }}
+  </body>
+</html>

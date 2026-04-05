@@ -1,0 +1,14 @@
+{{ if .hasPageToc }}
+  <details class="mobile-page-toc" data-mobile-toc>
+    <summary class="mobile-page-toc__summary">
+      <span class="mobile-page-toc__label">
+        <span>On this page</span>
+        {{ partial "icon.html" (dict "name" "chevron-down" "class" "icon") }}
+      </span>
+      <span class="mobile-page-toc__current" data-mobile-current-heading>Contents</span>
+    </summary>
+    <div class="mobile-page-toc__panel" data-toc data-mobile-toc-panel>
+      {{ .tocHtml }}
+    </div>
+  </details>
+{{ end }}

@@ -1,0 +1,27 @@
+{{ $docsRoot := site.GetPage "/docs" }}
+
+{{ with $docsRoot }}
+  <div class="docs-sidebar__inner">
+    <div class="docs-rail-header">
+      <div class="docs-sidebar__top">
+        <a class="site-brand" href="{{ .RelPermalink }}">
+          <span>{{ site.Title }}</span>
+        </a>
+        <button class="icon-button docs-sidebar__close" type="button" data-nav-close>
+          {{ partial "icon.html" (dict "name" "x" "size" 24 "class" "icon") }}
+          <span class="sr-only">Close navigation</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="docs-sidebar__nav" aria-label="Docs">
+      <ul class="docs-tree">
+        {{ range .Pages.ByWeight }}
+          {{ partial "docs-sidebar-tree.html" (dict "page" . "current" $) }}
+        {{ end }}
+      </ul>
+    </nav>
+
+    {{ partial "docs-drawer-footer.html" . }}
+  </div>
+{{ end }}

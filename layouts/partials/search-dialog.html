@@ -1,0 +1,43 @@
+{{ if site.Params.search | default true }}
+  <dialog
+    class="search-dialog"
+    id="docs-search"
+    data-search-dialog
+    aria-labelledby="docs-search-title"
+  >
+    <section class="search-dialog__panel">
+      <header class="search-dialog__header">
+        <p class="search-dialog__title" id="docs-search-title">Search docs</p>
+        <button class="icon-button search-dialog__close" type="button" data-search-close>
+          {{ partial "icon.html" (dict "name" "x" "class" "icon") }}
+          <span class="sr-only">Close search</span>
+        </button>
+      </header>
+
+      <label class="search-dialog__field" for="docs-search-input">
+        {{ partial "icon.html" (dict "name" "search" "class" "icon") }}
+        <span class="sr-only">Search query</span>
+        <input
+          id="docs-search-input"
+          class="search-dialog__input"
+          type="search"
+          name="search"
+          placeholder="Search docs"
+          autocomplete="off"
+          data-search-input
+        />
+      </label>
+
+      <div class="search-dialog__hint">
+        <span
+          >Use <kbd>/</kbd> or <kbd>Ctrl</kbd><span aria-hidden="true">/</span><kbd>K</kbd> to
+          search</span
+        >
+      </div>
+
+      <div class="search-dialog__results" data-search-results>
+        <p class="search-dialog__empty" data-search-empty>Start typing to search the docs.</p>
+      </div>
+    </section>
+  </dialog>
+{{ end }}

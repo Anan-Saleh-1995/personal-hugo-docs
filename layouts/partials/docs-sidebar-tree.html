@@ -1,0 +1,56 @@
+{{ $page := .page }}
+{{ $current := .current }}
+{{ $children := slice }}
+{{ $hasChildren := false }}
+{{ if eq $page.Kind "section" }}
+  {{ $children = $page.Pages.ByWeight }}
+  {{ $hasChildren = gt (len $children) 0 }}
+{{ end }}
+{{ $classes := slice "docs-tree__item" }}
+{{ if eq $page.RelPermalink $current.RelPermalink }}
+  {{ $classes = $classes | append "is-current" }}
+{{ end }}
+{{ if and (ne $page.RelPermalink $current.RelPermalink) ($page.IsAncestor $current) }}
+  {{ $classes = $classes | append "is-ancestor" }}
+{{ end }}
+{{ if eq $page.Kind "section" }}
+  {{ $classes = $classes | append "is-section" }}
+{{ end }}
+{{ $isOpen := or (eq $page.RelPermalink $current.RelPermalink) ($page.IsAncestor $current) }}
+{{ if and $hasChildren $isOpen }}
+  {{ $classes = $classes | append "is-expanded" }}
+{{ end }}
+{{ $branchId := printf "docs-tree-%s" (md5 $page.RelPermalink) }}
+{{ $expandedAttr := cond $isOpen "true" "false" }}
+
+
+<li class="{{ delimit $classes ` ` }}">
+  <div class="docs-tree__row">
+    <a class="docs-tree__link" href="{{ $page.RelPermalink }}">{{ $page.LinkTitle }}</a>
+
+    {{ if $hasChildren }}
+      <button
+        class="icon-button docs-tree__toggle"
+        type="button"
+        data-tree-toggle
+        aria-controls="{{ $branchId }}"
+        aria-expanded="{{ $expandedAttr }}"
+      >
+        {{ partial "icon.html" (dict "name" "chevron-down" "class" "icon") }}
+        <span class="sr-only">Toggle {{ $page.LinkTitle }}</span>
+      </button>
+    {{ end }}
+  </div>
+
+  {{ if $hasChildren }}
+    <ul
+      class="docs-tree docs-tree--nested"
+      id="{{ $branchId }}"
+      {{ if not $isOpen }}hidden{{ end }}
+    >
+      {{ range $children }}
+        {{ partial "docs-sidebar-tree.html" (dict "page" . "current" $current) }}
+      {{ end }}
+    </ul>
+  {{ end }}
+</li>

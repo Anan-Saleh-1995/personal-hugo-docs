@@ -1,0 +1,23 @@
+{{ $page := .page }}
+{{ $eyebrow := .eyebrow }}
+{{ $editBase := site.Params.editPageBaseUrl }}
+{{ $editUrl := "" }}
+{{ if and $editBase $page.File }}
+  {{ $editUrl = printf "%s/%s" (strings.TrimSuffix "/" $editBase) $page.File.Path }}
+{{ end }}
+
+
+<header class="docs-article__header">
+  {{ with $eyebrow }}
+    <p class="eyebrow">{{ . }}</p>
+  {{ end }}
+  <h1>{{ $page.Title }}</h1>
+  {{ with $page.Description }}
+    <p class="lead">{{ . }}</p>
+  {{ end }}
+  {{ with $editUrl }}
+    <div class="docs-article__actions">
+      <a href="{{ . }}" target="_blank" rel="noreferrer">Edit this page</a>
+    </div>
+  {{ end }}
+</header>

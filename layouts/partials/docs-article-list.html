@@ -1,0 +1,28 @@
+<article class="docs-article docs-article--list" data-docs-article>
+  {{ partial "docs-article-header.html" (dict "page" . "eyebrow" "Docs") }}
+
+
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  {{ $children := .Pages.ByWeight }}
+  {{ if gt (len $children) 0 }}
+    <section class="section-children" aria-labelledby="section-children-title">
+      <p class="section-children__eyebrow">Continue</p>
+      <h2 class="section-children__title" id="section-children-title">In this section</h2>
+
+      <div class="cards-grid">
+        {{ range $children }}
+          {{ $description := .Description | default .Summary }}
+          <a class="card section-child-card" href="{{ .RelPermalink }}">
+            <h3>{{ .LinkTitle }}</h3>
+            {{ with $description }}
+              <p>{{ . }}</p>
+            {{ end }}
+          </a>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+</article>

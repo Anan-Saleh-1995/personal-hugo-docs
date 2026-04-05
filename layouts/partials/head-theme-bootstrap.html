@@ -1,0 +1,43 @@
+{{ $themeColorLight := site.Params.themeColorLight | default "#ffffff" }}
+{{ $themeColorDark := site.Params.themeColorDark | default "#1c2128" }}
+{{ $themeStorageKey := "personal-hugo-docs-theme" }}
+
+
+<meta
+  name="theme-color"
+  content="{{ $themeColorLight }}"
+  id="theme-color-meta"
+  data-theme-color-light="{{ $themeColorLight }}"
+  data-theme-color-dark="{{ $themeColorDark }}"
+  data-theme-storage-key="{{ $themeStorageKey }}"
+/>
+
+<script>
+  (() => {
+    const meta = document.getElementById("theme-color-meta");
+    if (!meta) {
+      return;
+    }
+
+    const storageKey = meta.dataset.themeStorageKey || "personal-hugo-docs-theme";
+    const lightThemeColor = meta.dataset.themeColorLight || "{{ $themeColorLight }}";
+    const darkThemeColor = meta.dataset.themeColorDark || "{{ $themeColorDark }}";
+    let theme = "light";
+
+    try {
+      const storedTheme = window.localStorage.getItem(storageKey);
+      if (storedTheme === "light" || storedTheme === "dark") {
+        theme = storedTheme;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch {}
+
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+
+    const themeColor = theme === "dark" ? darkThemeColor : lightThemeColor;
+    meta.setAttribute("content", themeColor);
+  })();
+</script>

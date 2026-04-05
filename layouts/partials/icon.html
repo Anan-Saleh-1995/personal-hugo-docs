@@ -1,0 +1,64 @@
+{{ $name := .name | default "" }}
+{{ $size := .size | default 16 }}
+{{ $class := .class | default "" }}
+
+
+<svg
+  {{ if $class }}class="{{ $class }}"{{ end }}
+  width="{{ $size }}"
+  height="{{ $size }}"
+  viewBox="0 0 16 16"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  {{ if eq $name "menu" }}
+    <path
+      d="M2 3.25H14M2 8H14M2 12.75H14"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="1.5"
+    />
+  {{ else if eq $name "x" }}
+    <path
+      d="M3.25 3.25L12.75 12.75M12.75 3.25L3.25 12.75"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="1.5"
+    />
+  {{ else if eq $name "search" }}
+    <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5" />
+    <path
+      d="M10.5 10.5L13.25 13.25"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="1.5"
+    />
+  {{ else if eq $name "moon" }}
+    <path
+      d="M10.95 2.32A5.75 5.75 0 1 0 13.68 11.6A6.5 6.5 0 1 1 10.95 2.32Z"
+      fill="currentColor"
+    />
+  {{ else if eq $name "sun" }}
+    <circle cx="8" cy="8" r="2.75" fill="currentColor" />
+    <path
+      d="M8 1.5V3M8 13V14.5M14.5 8H13M3 8H1.5M12.6 3.4L11.45 4.55M4.55 11.45L3.4 12.6M12.6 12.6L11.45 11.45M4.55 4.55L3.4 3.4"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="1.5"
+    />
+  {{ else if eq $name "mark-github" }}
+    <path
+      d="M8 1.25A6.75 6.75 0 0 0 5.87 14.4c.34.06.46-.15.46-.33v-1.2C4.45 13.28 4.06 12 4.06 12c-.3-.75-.72-.95-.72-.95-.59-.4.04-.39.04-.39.65.05.99.67.99.67.58.99 1.52.7 1.89.53.06-.42.23-.7.41-.86-1.5-.17-3.08-.75-3.08-3.35 0-.74.27-1.34.69-1.81-.07-.17-.3-.86.07-1.8 0 0 .57-.18 1.87.69a6.4 6.4 0 0 1 3.4 0c1.3-.87 1.87-.69 1.87-.69.37.94.14 1.63.07 1.8.43.47.69 1.07.69 1.81 0 2.6-1.58 3.18-3.09 3.35.24.21.46.62.46 1.24v1.84c0 .18.12.39.46.33A6.75 6.75 0 0 0 8 1.25Z"
+      fill="currentColor"
+    />
+  {{ else if eq $name "chevron-down" }}
+    <path
+      d="M3.25 6L8 10.75L12.75 6"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="1.5"
+    />
+  {{ end }}
+</svg>

@@ -1,0 +1,28 @@
+{{ $page := .page }}
+{{ $articlePartial := .articlePartial }}
+
+{{ $showToc := true }}
+{{ if isset $page.Params "display_toc" }}
+  {{ $showToc = $page.Params.display_toc }}
+{{ end }}
+
+{{ $tocHtml := "" }}
+{{ $hasPageToc := false }}
+{{ if $showToc }}
+  {{ $tocHtml = partial "toc-nav.html" $page }}
+  {{ $hasPageToc = gt (len (findRE "<li>" $tocHtml)) 1 }}
+{{ end }}
+
+{{ $bodyClasses := slice "docs-body" }}
+{{ if not $hasPageToc }}
+  {{ $bodyClasses = $bodyClasses | append "docs-body--no-toc" }}
+{{ end }}
+
+{{ return dict
+  "page" $page
+  "articlePartial" $articlePartial
+  "showToc" $showToc
+  "tocHtml" $tocHtml
+  "hasPageToc" $hasPageToc
+  "bodyClasses" $bodyClasses
+}}

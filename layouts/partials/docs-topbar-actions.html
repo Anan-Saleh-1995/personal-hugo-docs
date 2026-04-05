@@ -1,0 +1,45 @@
+{{ $searchEnabled := site.Params.search | default true }}
+{{ $repoUrl := site.Params.repoUrl }}
+{{ $repoLabel := site.Params.repoLabel | default "GitHub" }}
+
+
+<div class="docs-topbar__actions">
+  {{ if $searchEnabled }}
+    <button
+      class="search-trigger"
+      type="button"
+      data-search-open
+      aria-controls="docs-search"
+      aria-haspopup="dialog"
+    >
+      {{ partial "icon.html" (dict "name" "search" "class" "icon") }}
+      <span class="search-trigger__label">Search docs</span>
+      <span class="search-trigger__shortcut" aria-hidden="true">Ctrl K</span>
+    </button>
+  {{ end }}
+  <div class="docs-topbar__utility-group">
+    <span class="docs-topbar__separator" aria-hidden="true"></span>
+
+    <button class="icon-button theme-toggle theme-toggle--topbar" type="button" data-theme-toggle>
+      <span class="theme-toggle__icon theme-toggle__icon--dark">
+        {{ partial "icon.html" (dict "name" "moon" "class" "icon") }}
+      </span>
+      <span class="theme-toggle__icon theme-toggle__icon--light">
+        {{ partial "icon.html" (dict "name" "sun" "class" "icon") }}
+      </span>
+      <span class="sr-only">Toggle theme</span>
+    </button>
+
+    {{ with $repoUrl }}
+      <a
+        class="icon-button topbar-social-link topbar-social-link--github"
+        href="{{ . }}"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {{ partial "icon.html" (dict "name" "mark-github" "class" "icon") }}
+        <span class="sr-only">{{ $repoLabel }}</span>
+      </a>
+    {{ end }}
+  </div>
+</div>

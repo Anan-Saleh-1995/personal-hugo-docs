@@ -1,0 +1,44 @@
+{{ $rawType := lower (.Type | default "") }}
+{{ $label := "Code" }}
+{{ $variant := "editor" }}
+
+{{ if or (eq $rawType "js") (eq $rawType "javascript") }}
+  {{ $label = "JavaScript" }}
+{{ else if or (eq $rawType "ts") (eq $rawType "typescript") }}
+  {{ $label = "TypeScript" }}
+{{ else if eq $rawType "html" }}
+  {{ $label = "HTML" }}
+{{ else if eq $rawType "css" }}
+  {{ $label = "CSS" }}
+{{ else if eq $rawType "scss" }}
+  {{ $label = "SCSS" }}
+{{ else if eq $rawType "json" }}
+  {{ $label = "JSON" }}
+{{ else if or (eq $rawType "yaml") (eq $rawType "yml") }}
+  {{ $label = "YAML" }}
+{{ else if or (eq $rawType "bash") (eq $rawType "sh") (eq $rawType "zsh") }}
+  {{ $label = "Shell" }}
+  {{ $variant = "terminal" }}
+{{ else if or (eq $rawType "powershell") (eq $rawType "pwsh") (eq $rawType "ps1") }}
+  {{ $label = "PowerShell" }}
+  {{ $variant = "terminal" }}
+{{ else if or (eq $rawType "cmd") (eq $rawType "bat") }}
+  {{ $label = "Command Prompt" }}
+  {{ $variant = "terminal" }}
+{{ else if $rawType }}
+  {{ $label = title $rawType }}
+{{ end }}
+
+{{ $result := transform.HighlightCodeBlock . }}
+{{ $classes := slice "code-block" (printf "code-block--%s" $variant) }}
+<figure class="{{ delimit $classes ` ` }}" data-code-block>
+  <figcaption class="code-block__header">
+    <span class="code-block__label">{{ $label }}</span>
+    <button class="code-block__copy" type="button" data-copy-code data-copy-label="Copy">
+      Copy
+    </button>
+  </figcaption>
+  <div class="code-block__body">
+    {{ $result.Wrapped }}
+  </div>
+</figure>

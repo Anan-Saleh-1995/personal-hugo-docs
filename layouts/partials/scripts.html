@@ -1,0 +1,11 @@
+{{ with resources.Get "js/site.mjs" }}
+  {{ $script := . | js.Build (dict "targetPath" "assets/site.js" "minify" (not hugo.IsServer)) }}
+  {{ if not hugo.IsServer }}
+    {{ $script = $script | fingerprint }}
+  {{ end }}
+  <script
+    type="module"
+    src="{{ $script.RelPermalink }}"
+    {{ if $script.Data.Integrity }}integrity="{{ $script.Data.Integrity }}"{{ end }}
+  ></script>
+{{ end }}

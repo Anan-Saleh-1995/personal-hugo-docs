@@ -1,0 +1,137 @@
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  text-rendering: optimizelegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: var(--font-size-32);
+}
+
+h2 {
+  font-size: var(--font-size-24);
+}
+
+h3 {
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-snug);
+}
+
+h4 {
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-base);
+}
+
+p,
+ul,
+ol {
+  max-width: var(--measure-reading);
+}
+
+a {
+  color: var(--color-accent);
+}
+
+.lead,
+.card__eyebrow {
+  margin: 0 0 var(--space-2);
+}
+
+.lead {
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-muted);
+}
+
+.eyebrow,
+.card__eyebrow,
+.page-toc__title,
+.docs-tree__link,
+.code-block__label,
+.search-result__meta {
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-snug);
+  font-weight: var(--font-weight-medium);
+}
+
+.prose {
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-base);
+}
+
+.prose > * + * {
+  margin-top: var(--space-2);
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-top: var(--space-4);
+}
+
+.prose :is(ul, ol) li + li {
+  margin-top: 0.35rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+}
+
+.prose code,
+.code-block pre,
+.code-block code {
+  font-family: var(--font-family-code);
+}
+
+.prose :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-1);
+  background: var(--color-surface-2);
+  font-size: 0.95em;
+  color: var(--color-code-text);
+}
+
+.heading-anchor {
+  margin-left: var(--space-1);
+  text-decoration: none;
+  color: var(--color-text-muted);
+}
+
+blockquote {
+  margin: var(--space-3) 0;
+  padding-left: var(--space-2);
+  border-left: 3px solid var(--color-border);
+  color: var(--color-text-muted);
+}
