@@ -12,3 +12,4 @@ pnpm-debug.log*
 assets/jsconfig.json
 playwright-report/
 test-results/
+notes/stress/

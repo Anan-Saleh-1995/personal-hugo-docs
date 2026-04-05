@@ -76,3 +76,54 @@ test("theme selection persists across reloads", async ({ page }) => {
   await page.reload();
   await expect(root).toHaveAttribute("data-theme", after);
 });
+
+test.fixme("desktop sidebar scrolls when the nav tree gets long (move notes/stress/content/docs/sidebar-stress back into content/docs to run this)", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/docs/sidebar-stress/item-01/");
+
+  const sidebarNav = page.locator(".docs-sidebar__nav");
+  const lastLink = page.locator(".docs-sidebar__nav .docs-tree__link", { hasText: "Item 20" });
+
+  const metrics = await sidebarNav.evaluate((node) => ({
+    clientHeight: node.clientHeight,
+    scrollHeight: node.scrollHeight,
+    scrollTop: node.scrollTop,
+  }));
+
+  expect(metrics.scrollHeight).toBeGreaterThan(metrics.clientHeight);
+
+  await sidebarNav.evaluate((node) => {
+    node.scrollTo({ top: node.scrollHeight, behavior: "instant" });
+  });
+
+  const finalScrollTop = await sidebarNav.evaluate((node) => node.scrollTop);
+  expect(finalScrollTop).toBeGreaterThan(0);
+
+  await expect(lastLink).toBeVisible();
+});
+
+test.fixme("desktop sidebar keeps its scroll position across docs navigation (move notes/stress/content/docs/sidebar-stress back into content/docs to run this)", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/docs/sidebar-stress/item-01/");
+
+  const sidebarNav = page.locator(".docs-sidebar__nav");
+  const targetLink = page.locator(".docs-sidebar__nav .docs-tree__link", { hasText: "Item 20" });
+
+  await sidebarNav.evaluate((node) => {
+    node.scrollTo({ top: node.scrollHeight, behavior: "instant" });
+  });
+
+  const before = await sidebarNav.evaluate((node) => node.scrollTop);
+  expect(before).toBeGreaterThan(0);
+
+  await targetLink.click();
+  await expect(page).toHaveURL(/\/docs\/sidebar-stress\/item-20\/$/);
+
+  const after = await sidebarNav.evaluate((node) => node.scrollTop);
+  expect(after).toBeGreaterThan(0);
+  expect(Math.abs(after - before)).toBeLessThanOrEqual(16);
+});

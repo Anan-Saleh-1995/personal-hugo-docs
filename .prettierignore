@@ -4,3 +4,4 @@ resources/
 layouts/_markup/render-heading.html
 playwright-report/
 test-results/
+notes/stress/

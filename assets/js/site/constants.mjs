@@ -12,6 +12,7 @@ export const SELECTORS = {
   mobileTocPanel: "[data-mobile-toc-panel]",
   navClose: "[data-nav-close]",
   navOverlay: "[data-nav-overlay]",
+  navScrollArea: "[data-nav-scroll-area]",
   navToggle: "[data-nav-toggle]",
   searchClose: "[data-search-close]",
   searchDialog: "[data-search-dialog]",
@@ -27,6 +28,7 @@ export const SELECTORS = {
 };
 
 export const STORAGE_KEYS = {
+  sidebarScroll: "personal-hugo-docs-sidebar-scroll",
   theme: "personal-hugo-docs-theme",
 };
 

@@ -55,12 +55,30 @@
   min-height: 0;
   overflow: auto;
   padding-right: 0.25rem;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
 }
 
 .docs-sidebar__nav::-webkit-scrollbar {
-  display: none;
+  width: 0.5rem;
+}
+
+.docs-sidebar__nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.docs-sidebar__nav::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--color-border);
+  background-clip: content-box;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .docs-sidebar__nav::-webkit-scrollbar-thumb:hover {
+    background: var(--color-divider-strong);
+    background-clip: content-box;
+  }
 }
 
 .docs-tree {

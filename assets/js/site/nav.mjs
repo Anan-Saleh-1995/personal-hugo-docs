@@ -1,10 +1,49 @@
-import { MEDIA_QUERIES, SELECTORS } from "./constants.mjs";
+import { MEDIA_QUERIES, SELECTORS, STORAGE_KEYS } from "./constants.mjs";
 import { query, queryAll } from "./utils.mjs";
 
 let drawerMode = null;
 let overlay = null;
 let mainArea = null;
+let sidebarNav = null;
 let toggleButtons = [];
+let persistScrollFrame = 0;
+
+const persistSidebarScroll = () => {
+  if (!sidebarNav) {
+    return;
+  }
+
+  window.sessionStorage.setItem(STORAGE_KEYS.sidebarScroll, String(sidebarNav.scrollTop));
+};
+
+const schedulePersistSidebarScroll = () => {
+  if (persistScrollFrame) {
+    window.cancelAnimationFrame(persistScrollFrame);
+  }
+
+  persistScrollFrame = window.requestAnimationFrame(() => {
+    persistScrollFrame = 0;
+    persistSidebarScroll();
+  });
+};
+
+const restoreSidebarScroll = () => {
+  if (!sidebarNav) {
+    return;
+  }
+
+  const saved = window.sessionStorage.getItem(STORAGE_KEYS.sidebarScroll);
+  if (!saved) {
+    return;
+  }
+
+  const nextScrollTop = Number.parseFloat(saved);
+  if (Number.isNaN(nextScrollTop)) {
+    return;
+  }
+
+  sidebarNav.scrollTop = nextScrollTop;
+};
 
 const updateToggleState = (open) => {
   toggleButtons.forEach((button) => {
@@ -43,6 +82,7 @@ export const initNav = () => {
   drawerMode = window.matchMedia(MEDIA_QUERIES.drawer);
   overlay = query(SELECTORS.navOverlay);
   mainArea = query(SELECTORS.mainArea);
+  sidebarNav = query(SELECTORS.navScrollArea);
   toggleButtons = queryAll(SELECTORS.navToggle);
 
   if (toggleButtons.length === 0 && !closeButton && !sidebar && !overlay) {
@@ -54,6 +94,8 @@ export const initNav = () => {
   if (overlay) {
     overlay.hidden = true;
   }
+
+  restoreSidebarScroll();
 
   toggleButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -71,10 +113,15 @@ export const initNav = () => {
     }
 
     const link = target.closest("a[href]");
-    if (link && drawerMode.matches) {
-      closeNav();
+    if (link) {
+      persistSidebarScroll();
+      if (drawerMode.matches) {
+        closeNav();
+      }
     }
   });
+
+  sidebarNav?.addEventListener("scroll", schedulePersistSidebarScroll, { passive: true });
 
   drawerMode.addEventListener("change", (event) => {
     if (!event.matches) {

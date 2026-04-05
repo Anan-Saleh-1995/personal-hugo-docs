@@ -14,13 +14,44 @@
       </div>
     </div>
 
-    <nav class="docs-sidebar__nav" aria-label="Docs">
+    <nav
+      class="docs-sidebar__nav"
+      aria-label="Docs"
+      data-nav-scroll-area
+      data-nav-scroll-key="personal-hugo-docs-sidebar-scroll"
+    >
       <ul class="docs-tree">
         {{ range .Pages.ByWeight }}
           {{ partial "docs-sidebar-tree.html" (dict "page" . "current" $) }}
         {{ end }}
       </ul>
     </nav>
+
+    <script>
+      (() => {
+        const nav = document.currentScript.previousElementSibling;
+        if (!(nav instanceof HTMLElement)) {
+          return;
+        }
+
+        const storageKey = nav.dataset.navScrollKey;
+        if (!storageKey) {
+          return;
+        }
+
+        const saved = window.sessionStorage.getItem(storageKey);
+        if (!saved) {
+          return;
+        }
+
+        const nextScrollTop = Number.parseFloat(saved);
+        if (Number.isNaN(nextScrollTop)) {
+          return;
+        }
+
+        nav.scrollTop = nextScrollTop;
+      })();
+    </script>
 
     {{ partial "docs-drawer-footer.html" . }}
   </div>
