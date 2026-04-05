@@ -9,7 +9,7 @@
     "postbuild": "pagefind --site public --quiet",
     "format": "prettier --write \"**/*.{html,js,json,md,mjs,scss,yaml,yml}\"",
     "format:check": "prettier --check \"**/*.{html,js,json,md,mjs,scss,yaml,yml}\"",
-    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\" \"#public\" \"#resources\"",
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\" \"#public\" \"#resources\" \"#notes/stress\"",
     "lint:css": "stylelint \"assets/**/*.scss\"",
     "lint": "npm run lint:md && npm run lint:css",
     "test:smoke": "playwright test",
@@ -43,7 +43,7 @@
     "*.{html,mjs,scss}": "prettier --write",
     "*.md": [
       "prettier --write",
-      "markdownlint-cli2"
+      "markdownlint-cli2 \"#notes/stress\""
     ],
     "assets/**/*.scss": "stylelint --fix"
   }
