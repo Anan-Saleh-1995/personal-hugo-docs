@@ -22,7 +22,7 @@ params:
   siteName: Personal Hugo Docs
   themeColorLight: "#ffffff"
   themeColorDark: "#1c2128"
-  repoUrl: "someurl.com"
+  repoUrl: "https://github.com/Anan-Saleh-1995/personal-hugo-docs"
   repoLabel: GitHub
   search: true
   editPageBaseUrl: ""
